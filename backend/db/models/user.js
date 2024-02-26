@@ -9,6 +9,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Spots, {
+				foreignKey: "ownerId",
+				onDelete: "CASCADE",
+				hooks: true,
+			});
+			User.hasMany(models.Review, {
+				foreignKey: "userId",
+				onDelete: "CASCADE",
+				hooks: true,
+			});
+			User.hasMany(models.Bookings, {
+				foreignKey: "userId",
+			});
+
     }
   }
   User.init({
@@ -24,6 +38,19 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    username:{
+      type: DataTypes.STRING,
+				allowNull: false,
+				unique: true,
+				validate: {
+					len: [5, 40],
+					isNotEmail(value) {
+						if (Validator.isEmail(value)) {
+							throw new Error("Username cannot be your email.");
+						}
+					},
+				},
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -32,6 +59,14 @@ module.exports = (sequelize, DataTypes) => {
         len: [3, 256],
         isEmail: true
       }
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
