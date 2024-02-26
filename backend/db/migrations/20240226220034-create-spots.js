@@ -37,10 +37,10 @@ module.exports = {
 				country: {
 					type: Sequelize.TEXT,
 				},
-				latitude: {
+				lat: {
 					type: Sequelize.DECIMAL,
 				},
-				longitude: {
+				lng: {
 					type: Sequelize.DECIMAL,
 				},
 				name: {
