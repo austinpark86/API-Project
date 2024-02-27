@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Spots, {
+      User.hasMany(models.Spot, {
 				foreignKey: "ownerId",
 				onDelete: "CASCADE",
 				hooks: true,
@@ -19,24 +19,20 @@ module.exports = (sequelize, DataTypes) => {
 				onDelete: "CASCADE",
 				hooks: true,
 			});
-			User.hasMany(models.Bookings, {
+			User.hasMany(models.Booking, {
 				foreignKey: "userId",
 			});
 
     }
   }
   User.init({
-    username: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [4, 30],
-        isNotEmail(value) {
-          if (Validator.isEmail(value)) {
-            throw new Error("Cannot be an email.");
-          }
-        }
-      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     username:{
       type: DataTypes.STRING,
@@ -60,14 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
       allowNull: false,
