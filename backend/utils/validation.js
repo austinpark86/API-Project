@@ -1,5 +1,4 @@
 const { validationResult } = require('express-validator');
-const { Spot, Review, Booking, ReviewImage, SpotImage } = require("../db/models");
 const { check, query } = require("express-validator");
 const { Op } = require("sequelize");
 const { User, Spot, SpotImage, Booking, Review, ReviewImage} = require('../../db/models');
