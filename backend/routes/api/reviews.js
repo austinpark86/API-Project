@@ -80,3 +80,5 @@ router.post("/:reviewId/images", requireAuth,isOwner, async (req, res) => {
       url: newImage.url,
     });
   });
+
+module.exports=router;
