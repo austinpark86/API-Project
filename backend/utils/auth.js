@@ -36,7 +36,7 @@ const setTokenCookie = (res, user) => {
     // token parsed from cookies
     const { token } = req.cookies;
     req.user = null;
-
+    console.log('sajdsandjknaskj')
     return jwt.verify(token, secret, null, async (err, jwtPayload) => {
       if (err) {
         return next();
@@ -53,7 +53,7 @@ const setTokenCookie = (res, user) => {
         res.clearCookie('token');
         return next();
       }
-
+      console.log('number  222222')
       if (!req.user) res.clearCookie('token');
 
       return next();
