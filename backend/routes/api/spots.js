@@ -166,6 +166,41 @@ router.get('/', async (req, res) => {
 
     return res.json({ Spots: arr, page, size })
 });
+// Get all Spots owned by the Current User
+router.get('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+    let spots = await Spot.findAll({
+        where: { ownerId: user.id }
+    })
+    let arr = [];
+
+    for(let i = 0; i < spots.length; i++) {
+        let spot = spots[i]
+
+        const numReviews = await Review.count({
+            where: { spotId: spot.id }
+        })
+
+        const sumRating = await Review.sum('stars', {
+            where: { spotId: spot.id }
+        })
+
+        const avgRating = sumRating / numReviews;
+
+        const previewImage = await SpotImage.findOne({
+            attributes: ['url'],
+            where: { spotId: spot.id, preview: true }
+        })
+
+        spot = spot.toJSON()
+        spot.avgRating = avgRating ? avgRating : null
+        spot.previewImage = previewImage ? previewImage.url : null
+
+        arr.push(spot)
+    }
+
+    return res.json({ Spots: arr })
+})
 
 // Get details of a Spot from an id
 router.get('/:spotId', async (req, res) => {
@@ -373,6 +408,40 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res) =>
     })
 
     return res.status(201).json(newReview)
+})
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const { startDate, endDate } = req.body;
+    const { user } = req;
+    const { spotId } = req.params;
+    let spot = await Spot.findByPk(spotId)
+
+    if(!spot) {
+        return res.status(404).json({
+            message: `Spot couldn't be found`
+        })
+    }
+
+    let startDateString = new Date(startDate).toDateString()
+    let endDateString = new Date(endDate).toDateString()
+
+    let startDateTime = new Date(startDateString).getTime()
+    let endDateTime = new Date(endDateString).getTime()
+
+    if(startDateTime >= endDateTime) {
+        return res.status(400).json({
+            message: 'Bad Request',
+            errors: {
+                endDate: 'endDate cannot be on or before startDate'
+            }
+        })
+    }
+
+    const bookings = await Booking.findAll({
+        where: { spotId: spotId }
+    })
+
+
 })
 
 module.exports=router

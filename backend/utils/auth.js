@@ -34,9 +34,10 @@ const setTokenCookie = (res, user) => {
 
   const restoreUser = (req, res, next) => {
     // token parsed from cookies
+    console.log('inside restoreUser')
     const { token } = req.cookies;
     req.user = null;
-    console.log('sajdsandjknaskj')
+    console.log('Inside restore user')
     return jwt.verify(token, secret, null, async (err, jwtPayload) => {
       if (err) {
         return next();
@@ -53,7 +54,7 @@ const setTokenCookie = (res, user) => {
         res.clearCookie('token');
         return next();
       }
-      console.log('number  222222')
+      console.log('Inside restore user 2')
       if (!req.user) res.clearCookie('token');
 
       return next();

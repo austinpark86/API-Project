@@ -24,7 +24,7 @@ app.use(
   })
 );
 
-// Set the _csrf token and create req.csrfToken method
+//Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
     cookie: {
@@ -34,7 +34,7 @@ app.use(
     }
   })
 );
-// backend/app.js
+// // backend/app.js
 const routes = require('./routes');
 app.use(routes)
 //catching all unhandled requests, and sending them to error handlers
