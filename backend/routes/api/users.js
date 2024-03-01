@@ -43,7 +43,6 @@ router.post(
     async (req, res) => {
       const { firstName, lastName, email, password, username } = req.body;
       const hashedPassword = bcrypt.hashSync(password);
-      console.log('saafbasfbafasb')
       const user = await User.create({ firstName, lastName, email, username, hashedPassword });
 
       const safeUser = {
@@ -53,7 +52,7 @@ router.post(
         email: user.email,
         username: user.username,
       };
-      console.log('statement1')
+
       await setTokenCookie(res, safeUser);
 
       return res.json({
