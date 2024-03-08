@@ -70,101 +70,75 @@ const validateReview = [
 router.get('/', async (req, res) => {
 	let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
 
-	const errors = {};
-
+	// Convert string to numbers like shane wanted
 	page = parseInt(page);
 	size = parseInt(size);
+	minLat = parseFloat(minLat);
+	maxLat = parseFloat(maxLat);
+	minLng = parseFloat(minLng);
+	maxLng = parseFloat(maxLng);
+	minPrice = parseFloat(minPrice);
+	maxPrice = parseFloat(maxPrice);
 
-	if (page < 1) errors.page = "Page must be greater than or equal to 1"
-	if (size < 1) errors.size = "Size must be greater than or equal to 1"
 
-	if (minLat) {
-		if (minLat < -90 || minLat > 90) errors.minLat = "Minimum latitude is invalid"
+	const errors = {};
+	if (Number.isNaN(page) || page < 1) errors.page = "Page must be a positive integer";
+	if (Number.isNaN(size) || size < 1) errors.size = "Size must be a positive integer";
+
+
+	if (!Number.isNaN(minLat) && (minLat < -90 || minLat > 90)) errors.minLat = "Minimum latitude is invalid";
+	if (!Number.isNaN(maxLat) && (maxLat < -90 || maxLat > 90)) errors.maxLat = "Maximum latitude is invalid";
+	if (!Number.isNaN(minLng) && (minLng < -180 || minLng > 180)) errors.minLng = "Minimum longitude is invalid";
+	if (!Number.isNaN(maxLng) && (maxLng < -180 || maxLng > 180)) errors.maxLng = "Maximum longitude is invalid";
+
+
+	if (!Number.isNaN(minPrice) && minPrice < 0) errors.minPrice = "Minimum price must be greater or equal to 0";
+	if (!Number.isNaN(maxPrice) && maxPrice < 0) errors.maxPrice = "Maximum price must be greater or equal to 0";
+
+
+	if (Object.keys(errors).length > 0) {
+		return res.status(400).json({ message: "Bad Request", errors });
 	}
 
-	if (maxLat) {
-		if (maxLat < -90 || maxLat > 90) errors.maxLat = "Maximum latitude is invalid"
-	}
 
-	if (minLng) {
-		if (minLng < -180 || minLng > 180) errors.minLng = "Minimum longitude is invalid"
-	}
+	page = page || 1;
+	size = size || 20;
 
-	if (maxLng) {
-		if (maxLng < -180 || maxLng > 180) errors.maxLng = "Maximum longitude is invalid"
-	}
 
-	if (minPrice) {
-		if (minPrice < 0) errors.minPrice = "Minimum price must be greater or equal to 0"
-	}
+	page = Math.min(page, 10);
+	size = Math.min(size, 20);
 
-	if (maxPrice) {
-		if (maxPrice < 0) errors.maxPrice = "Minimum price must be greater or equal to 0"
-	}
-
-	if (Object.keys(errors).length) {
-		const err = {
-			message: "Bad Request",
-			errors: errors
-		}
-
-		return res.status(400).json(err)
-	}
-
-	if (Number.isNaN(page) || page <= 0 || !page) page = 1;
-	if (Number.isNaN(size) || size <= 0 || !size) size = 20;
-
-	if (page > 10) page = 10;
-	if (size > 20) size = 20;
 
 	const where = {};
+	if (!Number.isNaN(minLat) && !Number.isNaN(maxLat)) where.lat = { [Op.between]: [minLat, maxLat] };
+	if (!Number.isNaN(minLng) && !Number.isNaN(maxLng)) where.lng = { [Op.between]: [minLng, maxLng] };
+	if (!Number.isNaN(minPrice) && !Number.isNaN(maxPrice)) where.price = { [Op.between]: [minPrice, maxPrice] };
 
-	if (minLat && !maxLat) where.lat = { [Op.gte]: minLat }
-	if (maxLat && !minLat) where.lat = { [Op.lte]: maxLat }
-	if (minLat && maxLat) where.lat = { [Op.between]: [minLat, maxLat] }
-
-	if (minLng && !maxLng) where.lng = { [Op.gte]: minLng }
-	if (maxLng && !minLng) where.lng = { [Op.lte]: maxLng }
-	if (minLng && maxLng) where.lng = { [Op.between]: [minLng, maxLng] }
-
-	if (minPrice && !maxPrice) where.minPrice = minPrice
-	if (maxPrice && !minPrice) where.maxPrice = maxPrice
-	if (minPrice && maxPrice) where.price = { [Op.between]: [minPrice, maxPrice] }
 
 	const spots = await Spot.findAll({
 		where,
 		limit: size,
 		offset: size * (page - 1)
-	})
+	});
 
-	let arr = []
-
-	for (let i = 0; i < spots.length; i++) {
-		let spot = spots[i]
-
-		const numReviews = await Review.count({
-			where: { spotId: spot.id }
-		})
-
-		const sumRating = await Review.sum('stars', {
-			where: { spotId: spot.id }
-		})
-
-		const avgRating = sumRating / numReviews;
+	const spotsWithDetails = await Promise.all(spots.map(async (spot) => {
+		const numReviews = await Review.count({ where: { spotId: spot.id } });
+		const sumRating = await Review.sum('stars', { where: { spotId: spot.id } });
+		const avgRating = sumRating / numReviews || null;
 
 		const previewImage = await SpotImage.findOne({
 			attributes: ['url'],
 			where: { spotId: spot.id, preview: true }
-		})
+		});
 
-		spot = spot.toJSON();
-		spot.avgRating = avgRating ? avgRating : null
-		spot.previewImage = previewImage ? previewImage.url : null
+		return {
+			...spot.toJSON(),
+			avgRating,
+			previewImage: previewImage ? previewImage.url : null
+		};
+	}));
 
-		arr.push(spot);
-	}
-
-	return res.json({ Spots: arr, page, size })
+	return res.json({ Spots: spotsWithDetails, page, size });
 });
 // Get all Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res) => {

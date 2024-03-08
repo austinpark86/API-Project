@@ -43,7 +43,10 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     const { startDate, endDate } = req.body;
     const { user } = req;
     let updateBooking = await Booking.findByPk(req.params.bookingId);
-
+    //included to show if past date was before start date
+    if (isPastDate(startDate) || isPastDate(endDate)) {
+        return res.status(400).json({ message: 'Dates cannot be in the past' });
+    }
     if(!updateBooking) {
         return res.status(404).json({
             message: `Booking couldn't be found`
