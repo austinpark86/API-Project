@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { getCurrentSpotsThunk } from "../../store/spots";
 import './CurrentSpots.css'
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
-
+import DeleteSpot from "../DeleteSpot/DeleteSpot";
 
 function CurrentSpots() {
     const navigate = useNavigate()
@@ -18,7 +18,37 @@ function CurrentSpots() {
         dispatch(getCurrentSpotsThunk())
     }, [dispatch, sessionUser, navigate])
 
-
+    return (
+        <>
+            {sessionUser && (
+                <div className="manage-spots-section">
+                    <div className="manage-spots-container">
+                        <h1 className="manage-title">Manage Your Spots</h1>
+                        <button className='create-new-spot-button' onClick={() => navigate('/spots/new')}>Create a New Spot</button>
+                    </div>
+                    <div className="spots-container">
+                        {spots.map((spot) => (
+                            <div key={spot.id}>
+                                <div className='spot-tile' onClick={() => navigate(`/spots/${spot.id}`)}>
+                                    <img className='spot-image' src={spot.previewImage} alt='preview' />
+                                    <div className="text-container">
+                                        <div className="spot-left">
+                                            <span>{`${spot.city}, ${spot.state}`}</span>
+                                            <p className="spot-prices"><span style={{fontWeight: 'bold'}}>{`$${Number(spot.price).toFixed(2)}`}</span> night</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="manage-buttons">
+                                    <button className='update-spot-button' onClick={() => navigate(`/spots/${spot.id}/edit`)}>Update</button>
+                                    <OpenModalButton buttonText={"Delete"} modalComponent={<DeleteSpot spotId={spot.id}/>}/>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </>
+    )
 }
 
 export default CurrentSpots;

@@ -108,7 +108,163 @@ function CreateSpot() {
 
         navigate(`/spots/${submit.id}`)
     }
-
+    return (
+        <>
+            {sessionUser && (
+                <form onSubmit={handleSubmit} className="create-spot-form">
+                    <div className="location-input section-divider-line">
+                        <h1>Create a New Spot</h1>
+                        <h2 className="create-spot-h2">Where&apos;s your place located?</h2>
+                        <p className="create-spot-p">Guests will only get your exact address once they booked a reservation.</p>
+                        <label className="label">
+                            {<span>Country <span className="errors">{errors.filter((error) => error.includes('Country'))}</span></span>}
+                            <input
+                                type='text'
+                                value={country}
+                                placeholder='Country'
+                                onChange={(e) => setCountry(e.target.value)}
+                                required
+                                />
+                        </label>
+                        <label className="label">
+                            {<span>Street Address <span className="errors">{errors.filter((error) => error.includes('Address'))}</span></span>}
+                            <input
+                                type='text'
+                                value={address}
+                                placeholder='Address'
+                                onChange={(e) => setAddress(e.target.value)}
+                                required
+                                />
+                        </label>
+                        <div className="city-state-input">
+                            <label className="label label-city">
+                                {<span>City <span className="errors">{errors.filter((error) => error.includes('City'))}</span></span>}
+                                <input
+                                    className="city-input"
+                                    type='text'
+                                    value={city}
+                                    placeholder='City'
+                                    onChange={(e) => setCity(e.target.value)}
+                                    required
+                                    />
+                            </label>
+                            <span className="city-comma">, </span>
+                            <label className="label label-state">
+                                {<span>State <span className="errors">{errors.filter((error) => error.includes('State'))}</span></span>}
+                                <input
+                                    type='text'
+                                    value={state}
+                                    placeholder='STATE'
+                                    onChange={(e) => setState(e.target.value)}
+                                    required
+                                    />
+                            </label>
+                        </div>
+                    </div>
+                    <div className="description-input section-divider-line">
+                        <h2 className="create-spot-h2">Describe your place to guests</h2>
+                        <p className="create-spot-p">Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
+                        <label className="label">
+                            <textarea
+                                className="description-text-box"
+                                type='text'
+                                value={description}
+                                placeholder='Please write at least 30 characters'
+                                onChange={(e) => setDescription(e.target.value)}
+                                minLength={30}
+                                />
+                            {<span className="errors">{errors.filter((error) => error.includes('Description'))}</span>}
+                        </label>
+                    </div>
+                    <div className="title-input section-divider-line">
+                        <h2 className="create-spot-h2">Create a title for your spot</h2>
+                        <p className="create-spot-p">Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
+                        <label className="label">
+                            <input
+                                type='text'
+                                value={name}
+                                placeholder='Name of your spot'
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                                />
+                            {<span className="errors">{errors.filter((error) => error.includes('Name'))}</span>}
+                        </label>
+                    </div>
+                    <div className="price-input section-divider-line">
+                        <h2 className="create-spot-h2">Set a base price for your spot</h2>
+                        <p className="create-spot-p">Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                        <div className="price-input-detail">
+                            <span className="dollar-sign">$</span>
+                            <label className="label">
+                                <input
+                                    className="price-text-box"
+                                    type='number'
+                                    value={price}
+                                    placeholder='Price per night (USD)'
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    required
+                                    />
+                                {<span className="errors">{errors.filter((error) => error.includes('Price'))}</span>}
+                            </label>
+                        </div>
+                    </div>
+                    <div className="photos-input section-divider-line">
+                        <h2 className="create-spot-h2">Liven up your spot with photos</h2>
+                        <p className="create-spot-p">Submit a link to at least one photo to publish your spot.</p>
+                        <label className="label">
+                            <input
+                                type='url'
+                                value={previewImage}
+                                placeholder='Preview Image URL'
+                                onChange={(e) => setPreviewImage(e.target.value)}
+                                required
+                                />
+                            {<span className="errors">{errors.filter((error) => error.includes('Preview'))}</span>}
+                        </label>
+                        <label className="label">
+                            <input
+                                type='url'
+                                value={image1}
+                                placeholder='Image URL'
+                                onChange={(e) => setImage1(e.target.value)}
+                                />
+                            {<span className="errors">{errors.find((error) => error.includes('Image 2'))}</span>}
+                        </label>
+                        <label className="label">
+                            <input
+                                type='url'
+                                value={image2}
+                                placeholder='Image URL'
+                                onChange={(e) => setImage2(e.target.value)}
+                                />
+                            {<span className="errors">{errors.find((error) => error.includes('Image 3'))}</span>}
+                        </label>
+                        <label className="label">
+                            <input
+                                type='url'
+                                value={image3}
+                                placeholder='Image URL'
+                                onChange={(e) => setImage3(e.target.value)}
+                                />
+                            {<span className="errors">{errors.find((error) => error.includes('Image 4'))}</span>}
+                        </label>
+                        <label className="label">
+                            <input
+                                type='url'
+                                value={image4}
+                                placeholder='Image URL'
+                                onChange={(e) => setImage4(e.target.value)}
+                                />
+                            {<span className="errors">{errors.find((error) => error.includes('Image 5'))}</span>}
+                        </label>
+                    </div>
+                    <div className="create-spot-button">
+                        <button className="create-button" type="submit" disabled={Object.values(validations).length}>Create Spot</button>
+                    </div>
+                </form>
+            )}
+        </>
+    )
 
 }
 

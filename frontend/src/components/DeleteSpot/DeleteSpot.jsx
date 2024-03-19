@@ -13,7 +13,16 @@ function DeleteSpot({ spotId }) {
         await dispatch(deleteSpotThunk(spotId))
         .then(closeModal)
     }
-
+    return (
+        <form className='delete-form' onSubmit={handleDelete}>
+            <h2 className="delete-spot-h2">Confirm Delete</h2>
+            <p>Are you sure you want to remove this spot from the listings?</p>
+            <div className="delete-buttons">
+                <button className='yes-button' type="submit">Yes (Delete Spot)</button>
+                <button className='no-button' onClick={() => closeModal()}>No (Keep Spot)</button>
+            </div>
+        </form>
+    )
 
 }
 
