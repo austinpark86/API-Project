@@ -2,26 +2,29 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpecificSpotThunk } from "../../store/spots";
 import { useParams } from "react-router";
-//import OpenModalButton from "../OpenModalButton/OpenModalButton";
-import './SpotDetails.css'
+import './SpotDetails.css';
 
 function SpotDetails() {
-    const dispatch = useDispatch()
-    const { spotId } = useParams()
-    const spot = useSelector((state) => state.spots[spotId])
-  //  const sessionUser = useSelector((state) => state.session.user)
+  const dispatch = useDispatch();
+  const { spotId } = useParams();
 
-
-    useEffect(() => {
-        dispatch(getSpecificSpotThunk(spotId))
-    }, [dispatch, spotId])
-
-    if(!spot) return null
-
-    const reserve = (e) => {
-        e.preventDefault()
-        window.alert('Feature Coming Soon...')
+  const spot = useSelector((state) => {
+    if (state.spots && spotId in state.spots) {
+      return state.spots[spotId];
     }
+    return null;
+  });
+
+  useEffect(() => {
+    dispatch(getSpecificSpotThunk(spotId));
+  }, [dispatch, spotId]);
+
+  if (!spot) return <div>Loading...</div>;
+
+  const reserve = (e) => {
+    e.preventDefault();
+    window.alert('Feature Coming Soon...');
+  };
 
    return (
         <section className="spot-details-section">
