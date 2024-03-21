@@ -11,7 +11,7 @@ function CurrentSpots() {
     const dispatch = useDispatch()
     const sessionUser = useSelector((state) => state.session.user)
     const spotsObj = useSelector((state) => state.spots)
-    const spots = Object.values(spotsObj)
+    const spots = spotsObj ? Object.values(spotsObj) : [];
 
     useEffect(() => {
         if(!sessionUser) navigate('/')

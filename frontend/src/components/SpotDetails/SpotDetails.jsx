@@ -9,15 +9,14 @@ function SpotDetails() {
     const dispatch = useDispatch()
     const { spotId } = useParams()
     const spot = useSelector((state) => state.spots[spotId])
-    //const sessionUser = useSelector((state) => state.session.user)
-    const reviewsObj = useSelector((state) => state.reviews)
-    const reviews = Object.values(reviewsObj)
+  //  const sessionUser = useSelector((state) => state.session.user)
+
 
     useEffect(() => {
         dispatch(getSpecificSpotThunk(spotId))
     }, [dispatch, spotId])
 
-    if(!spot || !reviews) return null
+    if(!spot) return null
 
     const reserve = (e) => {
         e.preventDefault()

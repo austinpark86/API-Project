@@ -1,17 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllSpotsThunk } from "../../store/spots"
+import  {getAllSpotsThunk}  from "../../store/spots"
 import './AllSpots.css'
 import { useNavigate } from "react-router-dom";
 
 function AllSpots() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const spotsObj = useSelector((state) => state.spot)
-    const spots = Object.values(spotsObj)
+    const spotsObj = useSelector((state) => state.spots)
+    const spots = spotsObj ? Object.values(spotsObj) : [];
 
     useEffect(() => {
+        console.log('use effect trigger')
         dispatch(getAllSpotsThunk())
+        console.log('IN ALL SPOTS')
     }, [dispatch])
 
     return (
@@ -28,9 +30,7 @@ function AllSpots() {
                                 <span>{`${spot.city}, ${spot.state}`}</span>
                                 <p className="spot-prices"><span style={{fontWeight: 'bold'}}>{`$${Number(spot.price).toFixed(2)}`}</span> night</p>
                             </div>
-                            <div className="spot-right">
-                                <i className="fas fa-star">{` ${spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}`}</i>
-                            </div>
+
                         </div>
                     </div>
                 ))}
