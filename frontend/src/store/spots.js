@@ -63,7 +63,9 @@ export const getAllSpotsThunk = () => async (dispatch) => {
         console.log('RES OKAY GIVING INFO')
         const data = await res.json()
         dispatch(getAllSpots(data))
+        console.log('ABOUT TO RETURN DATA')
         return data
+
     }
 }
 
