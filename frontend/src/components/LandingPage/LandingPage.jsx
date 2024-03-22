@@ -8,7 +8,7 @@ function AllSpots() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const spots = useSelector((state) => state.spots);
-
+  const spotsArray = spots ? Object.values(spots) : [];
   useEffect(() => {
     console.log("use effect trigger");
 
@@ -20,7 +20,7 @@ function AllSpots() {
   }, [dispatch]);
 
   console.log("Spots:", spots);
-  const spotsArray = spots ? Object.values(spots) : [];
+
 
   return (
     <section className="all-spots-section">
