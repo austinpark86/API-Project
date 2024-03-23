@@ -13,7 +13,7 @@ function SpotDetails() {
     const spot = useSelector((state) => state.spots[spotId])
     const sessionUser = useSelector((state) => state.session.user)
     const reviewsObj = useSelector((state) => state.reviews)
-    const reviews = Object.values(reviewsObj)
+    const reviews = reviewsObj ? Object.values(reviewsObj): []
 
     useEffect(() => {
         dispatch(getSpecificSpotThunk(spotId))
