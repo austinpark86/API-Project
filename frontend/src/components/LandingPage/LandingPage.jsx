@@ -10,20 +10,20 @@ function AllSpots() {
   const spots = useSelector((state) => state.spots);
   const spotsArray = spots ? Object.values(spots) : [];
   useEffect(() => {
-    console.log("use effect trigger");
+    //console.log("use effect trigger");
 
     dispatch(getAllSpotsThunk())
-      .then(() => console.log("API call successful"))
-      .catch((error) => console.error("Error fetching spots:", error));
-    console.log("IN ALL SPOTS");
+    //   .then(() => console.log("API call successful"))
+    //   .catch((error) => console.error("Error fetching spots:", error));
+    //console.log("IN ALL SPOTS");
 
   }, [dispatch]);
 
-  console.log("Spots:", spots);
+  //console.log("Spots:", spots);
 
 
   return (
-    <section className="all-spots-section">
+    <div className="all-spots">
       <div className="spots-container">
         {spotsArray.length === 0 ? (
           <p>Loading...</p>
@@ -36,7 +36,7 @@ function AllSpots() {
             >
               <div className="tool-tip">
                 <img
-                  className="all-spot-images"
+                  className="all-images-container"
                   src={spot.previewImage}
                   alt="preview"
                 />
@@ -57,7 +57,7 @@ function AllSpots() {
           ))
         )}
       </div>
-    </section>
+    </div>
   );
 }
 

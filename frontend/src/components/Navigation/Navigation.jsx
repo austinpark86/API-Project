@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
-
+import logo from './basketball.png'
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
@@ -11,7 +11,7 @@ function Navigation({ isLoaded }) {
     <header className='header-container'>
       <NavLink to='/' className='home-link'>
         <div className='header-left'>
-          <img className='logo' ></img>
+          <img className='logo'src={logo} ></img>
           <h2 className='page-title'>AirBNB Twin</h2>
         </div>
       </NavLink>

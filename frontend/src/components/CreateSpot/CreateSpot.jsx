@@ -114,8 +114,8 @@ function CreateSpot() {
                 <form onSubmit={handleSubmit} className="create-spot-form">
                     <div className="location-input section-divider-line">
                         <h1>Create a New Spot</h1>
-                        <h2 className="create-spot-h2">Where&apos;s your place located?</h2>
-                        <p className="create-spot-p">Guests will only get your exact address once they booked a reservation.</p>
+                        <h2 className="create-spot-h2">Where is your Spot?</h2>
+                        <p className="create-spot-p">Guests will receive address after booking.</p>
                         <label className="label">
                             {<span>Country <span className="errors">{errors.filter((error) => error.includes('Country'))}</span></span>}
                             <input
@@ -162,8 +162,8 @@ function CreateSpot() {
                         </div>
                     </div>
                     <div className="description-input section-divider-line">
-                        <h2 className="create-spot-h2">Describe your place to guests</h2>
-                        <p className="create-spot-p">Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.</p>
+                        <h2 className="create-spot-h2">Describe your spot</h2>
+                        <p className="create-spot-p">Tell Guests About Your Spot!</p>
                         <label className="label">
                             <textarea
                                 className="description-text-box"
@@ -177,8 +177,8 @@ function CreateSpot() {
                         </label>
                     </div>
                     <div className="title-input section-divider-line">
-                        <h2 className="create-spot-h2">Create a title for your spot</h2>
-                        <p className="create-spot-p">Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
+                        <h2 className="create-spot-h2">Give your home a name</h2>
+                        <p className="create-spot-p">Give your spot a name for your guests</p>
                         <label className="label">
                             <input
                                 type='text'
@@ -191,8 +191,8 @@ function CreateSpot() {
                         </label>
                     </div>
                     <div className="price-input section-divider-line">
-                        <h2 className="create-spot-h2">Set a base price for your spot</h2>
-                        <p className="create-spot-p">Competitive pricing can help your listing stand out and rank higher in search results.</p>
+                        <h2 className="create-spot-h2">How much will your spot cost?</h2>
+                        <p className="create-spot-p">Remember to make it affordable</p>
                         <div className="price-input-detail">
                             <span className="dollar-sign">$</span>
                             <label className="label">
@@ -209,8 +209,8 @@ function CreateSpot() {
                         </div>
                     </div>
                     <div className="photos-input section-divider-line">
-                        <h2 className="create-spot-h2">Liven up your spot with photos</h2>
-                        <p className="create-spot-p">Submit a link to at least one photo to publish your spot.</p>
+                        <h2 className="create-spot-h2">Share some photos!</h2>
+                        <p className="create-spot-p">Submit a link to at least one photo.</p>
                         <label className="label">
                             <input
                                 type='url'

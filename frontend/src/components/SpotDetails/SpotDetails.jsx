@@ -39,27 +39,27 @@ function SpotDetails() {
     const hasUserReviewed = reviews.some((review) => review.User?.id === sessionUser?.id)
 
     return (
-        <section className="spot-details-section">
+        <div className="spot-details-container">
             <h1>{spot.name}</h1>
-            <span className="spot-location">{spot.city}, {spot.state}, {spot.country}</span>
+            <span className="spot-location-container">{spot.city}, {spot.state}, {spot.country}</span>
             <div className="image-container">
-                <div className="large-image-section">
-                    <img className="large-image" src={spot.SpotImages?.[0]?.url} alt={spot.SpotImages ? spot.SpotImages[0]?.url : null} />
+                <div className="large-image-container">
+                    <img className="first-image" src={spot.SpotImages?.[0]?.url} alt={spot.SpotImages ? spot.SpotImages[0]?.url : null} />
                 </div>
-                <div className="small-images-section">
+                <div className="small-images-container">
                     <img className="small-images" src={spot.SpotImages?.[1]?.url} alt={spot.SpotImages ? spot.SpotImages[1]?.url : null} />
                     <img className="small-images" src={spot.SpotImages?.[2]?.url} alt={spot.SpotImages ? spot.SpotImages[2]?.url : null} />
                     <img className="small-images" src={spot.SpotImages?.[3]?.url} alt={spot.SpotImages ? spot.SpotImages[3]?.url : null} />
                     <img className="small-images" src={spot.SpotImages?.[4]?.url} alt={spot.SpotImages ? spot.SpotImages[4]?.url : null} />
                 </div>
             </div>
-            <div className="middle-section">
+            <div className="host-container">
                 <div className="description">
                     <h1 className="host-name">Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}</h1>
                     <p>{spot.description}</p>
                 </div>
                 <div className="reserve-box">
-                    <div className="reserve-box-info">
+                    <div className="reserve-box-text">
                         <div className="reserve-box-left">
                             <p className="spot-price"><span className='spot-price-number' style={{fontWeight: 'bold', fontSize: 'x-large'}}>{`$${Number(spot.price).toFixed(2)}`}</span>night</p>
                         </div>
@@ -71,7 +71,7 @@ function SpotDetails() {
                     <button onClick={reserve} className="reserve-button">Reserve</button>
                 </div>
             </div>
-            <div className="review-section">
+            <div className="review-container">
                 <h1 className="rating-review-h1"><i className="fas fa-star rating">{` ${ratings()}`}</i></h1>
                 {sessionUser && sessionUser?.id !== spot?.Owner?.id && !hasUserReviewed && (
                     <OpenModalButton buttonText={'Post Your Review'} modalComponent={<CreateReview spotId={spot.id}/>}/>
@@ -81,7 +81,7 @@ function SpotDetails() {
                 )}
                 <SpotReviews />
             </div>
-        </section>
+        </div>
     )
 }
 export default SpotDetails;

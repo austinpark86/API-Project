@@ -53,17 +53,17 @@ const deleteSpot = (spotId) => {
 
 
 export const getAllSpotsThunk = () => async (dispatch) => {
-    console.log('begining GET ALL SPOTS THUNK')
+    //console.log('begining GET ALL SPOTS THUNK')
     const res = await csrfFetch('/api/spots', {
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
     })
 
     if(res.ok) {
-        console.log('RES OKAY GIVING INFO')
+        //console.log('RES OKAY GIVING INFO')
         const data = await res.json()
         dispatch(getAllSpots(data))
-        console.log('ABOUT TO RETURN DATA')
+        //console.log('ABOUT TO RETURN DATA')
         return data
 
     }

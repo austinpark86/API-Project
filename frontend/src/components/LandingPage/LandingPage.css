@@ -1,4 +1,4 @@
-.all-spots-section {
+.all-spots {
     display: flex;
     justify-content: center;
 }
@@ -18,7 +18,7 @@
     cursor: pointer;
 }
 
-.all-spot-images {
+.all-images-container {
     object-fit: cover;
     width: 300px;
     height: 300px;

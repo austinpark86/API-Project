@@ -57,7 +57,7 @@ function CreateReview({ spotId }) {
                 className="post-review-text-box"
                 type='text'
                 value={review}
-                placeholder='Leave your review here...'
+                placeholder='Minimum 10 characters to leave a review'
                 onChange={(e) => setReview(e.target.value)}
                 minLength={10}
             />

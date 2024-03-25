@@ -1,0 +1,39 @@
+.delete-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    height:200px;
+    margin-top:auto;
+    padding:10px
+}
+
+.delete-spot-h2 {
+    margin: 0px;
+}
+
+.delete-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.yes-button {
+    width: 300px;
+    padding: 12px 0px;
+    border: 1px solid black;
+    box-shadow: 3px 3px 2px black;
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+.no-button {
+    width: 300px;
+    padding: 12px 0px;
+    border: 1px solid black;
+    box-shadow: 1px 1px 1px black;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}

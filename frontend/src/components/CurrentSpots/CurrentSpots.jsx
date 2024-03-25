@@ -21,7 +21,7 @@ function CurrentSpots() {
     return (
         <>
             {sessionUser && (
-                <div className="manage-spots-section">
+                <div className="main-spots-section">
                     <div className="manage-spots-container">
                         <h1 className="manage-title">Manage Your Spots</h1>
                         <button className='create-new-spot-button' onClick={() => navigate('/spots/new')}>Create a New Spot</button>
