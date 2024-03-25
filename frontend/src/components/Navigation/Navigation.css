@@ -58,8 +58,6 @@ body {
 }
 
 .profile-button {
-  border-radius: 30px;
-  border-width: thin;
   border: 1px solid black;
   padding: 8px 10px;
   font-size: 20px;
@@ -75,6 +73,7 @@ body {
   background-color: white;
   padding: 5px 10px 5px 10px;
   border: 1px solid black;
+  cursor: pointer;
 }
 
 .menu-item {
