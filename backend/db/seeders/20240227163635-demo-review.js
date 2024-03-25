@@ -29,6 +29,48 @@ module.exports = {
 					"You know for a mudhouse it ain't so bad",
 				stars: 3,
 			},
+			{
+				spotId: 4,
+				userId: 5,
+				review:
+					"Hardwood floors for a bed",
+				stars: 2,
+			},
+			{
+				spotId: 5,
+				userId: 4,
+				review:
+					"Peaceful",
+				stars: 5,
+			},
+			{
+				spotId: 6,
+				userId: 2,
+				review:
+					"Its Cold",
+				stars: 3,
+			},
+			{
+				spotId: 7,
+				userId: 1,
+				review:
+					"I cant see",
+				stars: 2,
+			},
+			{
+				spotId: 8,
+				userId: 6,
+				review:
+					"Stinks in here",
+				stars: 1,
+			},
+			{
+				spotId: 9,
+				userId: 5,
+				review:
+					"Im not allowed to say",
+				stars: 5,
+			},
     ])},
 
   async down (queryInterface, Sequelize) {
