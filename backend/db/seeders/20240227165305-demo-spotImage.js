@@ -194,7 +194,7 @@ module.exports = {
 		},
 		{
 			spotId: 8,
-			url: "https://lh3.googleusercontent.com/proxy/hTpxqtVNqmF1nO6xL3VVzAvccjKFaKc457R2w8oV1KirNdjAVGQxz8Oh9NYHU1ezT_kv5h9XqMCwYykJPIRmAokFf8hJ_nhgyfe2JILRHC2s7UUEJy9yI382QA1yW2T9HYk",
+			url: "https://www.zocalopublicsquare.org/wp-content/uploads/2020/01/Petchler-Sewers-Glimpse-p182.jpg",
 			preview: true,
 		},
 		{
